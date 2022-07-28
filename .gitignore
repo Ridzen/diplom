@@ -1,0 +1,11 @@
+python/
+pycharm + all/
+django/
+Procfile
+apps/heroes/__pycache__/
+apps/heroes/migrations/__pycache__/
+apps/users/__pycache__/
+apps/users/migrations/__pycache__/
+mlbb/__pycache__/
+mlbb/settings.py
+requirements.txt/
