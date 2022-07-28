@@ -1,1 +1,1 @@
-web: gunicorn mlbb.wsgi
+web: gunicorn mlbb.wsgi --log-file -
