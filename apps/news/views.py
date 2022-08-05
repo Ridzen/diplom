@@ -1,105 +1,79 @@
-from apps.users.models import User
-from apps.news.models import Post
-from django.views import generic
-from django.shortcuts import redirect, render
-from .decorators import get_query 
-from .forms import LogInForm, SignUpForm
-from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
-from .funcs import make_pagination
+from django.http import JsonResponse, HttpResponse
+
+from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework import status, generics, filters
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from apps.news.serializers import PostSerializer, PostCategorySerializer
+from apps.news.models import Post, PostCategories
 
 
-class HomePage(generic.ListView):
-    template_name = 'blogs/home.html'
-    model = Post
-
-    def get(self, request):
-        all_posts = Post.objects.all()
-        context = make_pagination(
-            request, all_posts, {}, 'posts', 2)
-        return render(request, 'blogs/home.html', context)
-
-
-class DetailPage(generic.DetailView):
-    template_name = 'blogs/read.html'
-    model = Post
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        del context['object']
-        context['reply_to_comments'] = self.reply_to_comments
-        context['reply_to_reply'] = self.reply_to_reply
-        context.update(self.context_data)
-        return context
-
-    @get_query
-    # @query_debugger
-    def get(self, request, *args, **kwargs):
-        all_comments = self.comments
-        self.context_data = make_pagination(
-            request, all_comments, {}, 'comments', 3)
-        return super().get(request, *args, **kwargs)
-
-
-class TagView(generic.View):
-
-    def get(self, request, tag):
-        all_posts = Post.objects.filter(tag=tag)
-        context = make_pagination(
-            request, all_posts, {}, 'posts', 2)
-        return render(request, 'blogs/tag.html', context)
-
-
-class RegisterView(generic.CreateView):
-    template_name = 'auth/register.html'
-    model = User
-    form_class = SignUpForm
-
-    def get_success_url(self) -> str:
-        return reverse('home')
-
-    def post(self, request, *args: str, **kwargs):
-        pass1 = request.POST['password']
-        pass2 = request.POST['password2']
-        if pass1 != pass2:
-            post = super().post(request, *args, **kwargs)
-            post.status_code = 400
-            return post
-        messages.add_message(request, messages.SUCCESS, "Sign Up successfully")
-        return super().post(request, *args, **kwargs)
-
-
-class LogInView(generic.View):
-
-    def get(self, request):
-        context = {}
-        form = LogInForm(request.POST)
-        context['form'] = form
-        return render(request, 'auth/login.html', context)
+class PostAPIView(generics.ListCreateAPIView):
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['title', 'tag']
+    serializer_class = PostSerializer
+    search_fields = ["name"]
+    queryset = Post.objects.all()
 
     def post(self, request):
-        context = {
-            'data': request.POST,
-            'has_error': False
-        }
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
-        if not user and not context['has_error']:
-            messages.add_message(request, messages.ERROR, 'Invalid login')
-            context['has_error'] = True
+        request_body = request.data
+        srz = PostSerializer(data=request_body)
+        if srz.is_valid():
+            srz.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response(srz.errors, status=status.HTTP_400_BAD_REQUEST, )
 
-        if context['has_error']:
-            return render(request, 'auth/login.html', status=401, context=context)
-        login(request, user)
-        messages.add_message(request, messages.SUCCESS, "Log In successfully")
-        return redirect('home')
+    @classmethod
+    def get_extra_actions(cls):
+        return []
 
 
-class LogOutView(generic.View):
+class PostRetrieveAPIView(APIView):
+    def get(self, request, pk):
+        try:
+            product = Post.objects.get(id=pk)
+        except Post.DoesNotExist:
+            return Response({'msg': 'post not found'}, status=status.HTTP_404_NOT_FOUND)
+        srz = PostSerializer(product, many=False)
+        return Response(srz.data, status=status.HTTP_200_OK)
 
-    def get(self, request):
-        logout(request)
-        messages.add_message(request, messages.SUCCESS, "Logout successfully")
-        return redirect('home')
+    def delete(self, request, pk):
+        try:
+            product = Post.objects.get(id=pk)
+        except Post.DoesNotExist:
+            return JsonResponse({'msg': 'post not found'}, status=status.HTTP_404_NOT_FOUND)
+        product.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
+class PostCategoriesAPIView(generics.ListAPIView):
+    serializer_class = PostCategorySerializer
+    queryset = PostCategories.objects.all()
+
+    def post(self, request):
+        request_body = request.data
+        new_heroes_category = PostCategories.objects.create(key_role=request_body['key_news'],
+                                                       )
+        srz = PostCategorySerializer(new_heroes_category, many=False)
+        return Response(srz.data, status=status.HTTP_201_CREATED)
+
+
+class PostCategoryRetrieveAPIView(APIView):
+    def get(self, request, pk):
+        try:
+            category = PostCategories.objects.get(id=pk)
+        except PostCategories.DoesNotExist:
+            return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
+        srz = PostCategorySerializer(category, many=False)
+        return Response(srz.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk):
+        try:
+            category = Post.objects.get(id=pk)
+        except PostCategories.DoesNotExist:
+            return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

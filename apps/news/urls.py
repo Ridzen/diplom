@@ -1,12 +1,10 @@
 from django.urls import path
-from .views import (HomePage, DetailPage, TagView,
-                    RegisterView, LogInView, LogOutView)
+
+from .views import PostAPIView, PostCategoriesAPIView, PostRetrieveAPIView, PostCategoryRetrieveAPIView
 
 urlpatterns = [
-    path("", HomePage.as_view(), name='home'),
-    path("similar/tags/<str:tag>/", TagView.as_view(), name='tagview'),
-    path("read/<int:pk>/", DetailPage.as_view(), name='read'),
-    path('signup/user/', RegisterView.as_view(), name='signup'),
-    path('login/', LogInView.as_view(), name='login'),
-    path('logout/', LogOutView.as_view(), name='logout')
+    path('', PostAPIView.as_view()),
+    path('<int:pk>/', PostRetrieveAPIView.as_view()),
+    path('categories/', PostCategoriesAPIView.as_view()),
+    path('categories/<int:pk>/', PostCategoryRetrieveAPIView.as_view()),
 ]
