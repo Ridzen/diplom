@@ -19,7 +19,11 @@ from django.urls import path, include
 from .yasg import urlpatterns as doc_urls
 from . import settings
 from django.conf.urls.static import static
+<<<<<<< HEAD
 from rest_framework_swagger.views import get_swagger_view
+=======
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+>>>>>>> e80be278e72e689c513937d568da433664d3a7b2
 
 scheme_view = get_swagger_view(title='Pastebin API')
 
@@ -30,10 +34,18 @@ urlpatterns = [
     path('api/v1/news/', include('apps.news.urls')),
 ]
 
+<<<<<<< HEAD
 urlpatterns += doc_urls
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+=======
+urlpatterns += staticfiles_urlpatterns()
+>>>>>>> e80be278e72e689c513937d568da433664d3a7b2
 if settings.DEBUG:
-        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns += re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    urlpatterns += re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT})
+
