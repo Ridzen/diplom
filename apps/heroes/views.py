@@ -6,8 +6,12 @@ from rest_framework import status, generics, filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from apps.heroes.models import Heroes, HeroesCategories, HeroesSkills
-from apps.heroes.serializers import HeroesSerializer, HeroesSkillsSerializer, HeroesCategorySerializer
+from apps.heroes.models import (
+    Heroes, HeroesCategories, HeroesSkills
+)
+from apps.heroes.serializers import (
+    HeroesSerializer, HeroesSkillsSerializer, HeroesCategorySerializer
+)
 
 
 class HeroesAPIView(generics.ListCreateAPIView):
