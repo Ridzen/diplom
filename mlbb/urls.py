@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include, re_path
-from gunicorn.app.pasterapp import serve
+from django.views.static import serve
 
 from .yasg import urlpatterns as doc_urls
 from . import settings
