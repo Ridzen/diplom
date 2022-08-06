@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include, re_path
-from gunicorn.app.pasterapp import serve
+from django.views.static import serve
 
 from .yasg import urlpatterns as doc_urls
 from . import settings
@@ -33,6 +33,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/heroes/', include('apps.heroes.urls')),
     path('api/v1/news/', include('apps.news.urls')),
+    path('api/v1/user/', include('apps.user.urls')),
 ]
 
 

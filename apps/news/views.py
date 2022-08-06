@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import status, generics, filters
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -11,6 +12,7 @@ from apps.news.models import Post, PostCategories
 
 
 class PostAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['title', 'tag']
     serializer_class = PostSerializer

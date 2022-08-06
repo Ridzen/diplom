@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 
     # Installed apps
     'apps.heroes',
-    # # 'apps.users',
+    'apps.user',
     'apps.news',
 
 ]
@@ -110,7 +110,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_new2.sqlite3',
+        'NAME': BASE_DIR / 'db_new3.sqlite3',
     }
 }
 
@@ -141,6 +141,8 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+AUTH_USER_MODEL = 'user.User'
 
 
 # Internationalization
