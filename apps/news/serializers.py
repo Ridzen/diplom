@@ -48,7 +48,7 @@ class NewsCommentReplySerializer(serializers.ModelSerializer):
 class CreateNewsCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsComment
-        fields = ('course', 'author', 'text')
+        fields = ('author', 'text')
 
 
 class CreateNewsReplyCommentSerializer(serializers.ModelSerializer):
