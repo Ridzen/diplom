@@ -21,7 +21,7 @@ class PostCategorySerializer(serializers.ModelSerializer):
 class NewsCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsComment
-        fields = ('id', 'text', 'created')
+        fields = ('id', 'text', 'created_data')
 
 
 class UserCommentsSerializer(serializers.ModelSerializer):
