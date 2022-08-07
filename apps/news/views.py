@@ -3,12 +3,17 @@ from django.http import JsonResponse, HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import status, generics, filters
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from apps.news.serializers import PostSerializer, PostCategorySerializer
-from apps.news.models import Post, PostCategories
+from apps.news.serializers import (
+    PostSerializer, PostCategorySerializer,
+    NewsCommentsSerializer, UserCommentsSerializer,
+    CreateNewsReplyCommentSerializer, CreateNewsCommentSerializer
+)
+from apps.news.models import Post, PostCategories, CommentReply, NewsComment, User
 
 
 class PostAPIView(generics.ListCreateAPIView):
@@ -79,3 +84,25 @@ class PostCategoryRetrieveAPIView(APIView):
             return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AddNewsReplyComment(generics.CreateAPIView):
+    queryset = CommentReply.objects.all()
+    serializer_class = CreateNewsReplyCommentSerializer
+
+
+class UserNewsCommentsView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserCommentsSerializer
+
+
+class UserNewsCommentsUpdateView(RetrieveUpdateDestroyAPIView):
+    queryset = NewsComment.objects.all()
+    serializer_class = NewsCommentsSerializer
+
+
+class AddNewsComment(generics.CreateAPIView):
+    queryset = NewsComment.objects.all()
+    serializer_class = CreateNewsCommentSerializer
+
+
