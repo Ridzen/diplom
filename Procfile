@@ -1,2 +1,2 @@
 web: gunicorn mlbb.wsgi --log-file -
-release: export $(cat .env | xargs)
+run: export $(cat .env | xargs)
