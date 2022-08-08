@@ -1,16 +1,18 @@
 from django.urls import path
 
-from .views import (
-    HeroesAPIView, HeroesCategoriesAPIView,
-    HeroesSkillsAPIView, HeroesRetrieveAPIView,
-    HeroesCategoryRetrieveAPIView, HeroesSkillsRetrieveAPIView,
-)
+from . import views
+
 urlpatterns = [
-    path('', HeroesAPIView.as_view()),
-    path('<int:pk>/', HeroesRetrieveAPIView.as_view()),
-    path('categories/', HeroesCategoriesAPIView.as_view()),
-    path('categories/<int:pk>/', HeroesCategoryRetrieveAPIView.as_view()),
-    path('skills/', HeroesSkillsAPIView.as_view()),
-    path('skills/int:pk/', HeroesSkillsRetrieveAPIView.as_view())
+    # Heroes urls
+    path('heroes-list', views.HeroesAPIView.as_view(), name='heroes-list'),
+    path('<int:pk>/', views.HeroesRetrieveAPIView.as_view(), name='heroes-retrieve'),
+
+    # Heroes Categories
+    path('categories/', views.HeroesCategoriesAPIView.as_view(), name='categories'),
+    path('categories/<int:pk>/', views.HeroesCategoryRetrieveAPIView.as_view(), name='categories-retrieve'),
+
+    # Heroes Skills
+    path('skills/', views.HeroesSkillsAPIView.as_view(), name='skills'),
+    path('skills/int:pk/', views.HeroesSkillsRetrieveAPIView.as_view(), name='skill-retrieve'),
 ]
 

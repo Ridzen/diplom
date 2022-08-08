@@ -1,12 +1,16 @@
 from rest_framework import serializers
 
-from apps.heroes.models import HeroesCategories, HeroesSkills, Heroes
+from apps.heroes.models import (
+    HeroesCategories, HeroesSkills, Heroes
+                                )
 
 
 class HeroesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Heroes
-        fields = ('__all__')
+        fields = (
+            'images', 'name', 'role', 'complexity', 'description', 'skill'
+        )
 
     def create(self, validated_data):
         return Heroes.objects.create(**validated_data)
@@ -17,7 +21,7 @@ class HeroesCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HeroesCategories
-        fields = "__all__"
+        fields = "key_role"
 
 
 class HeroesSkillsSerializer(serializers.ModelSerializer):
@@ -25,4 +29,6 @@ class HeroesSkillsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HeroesSkills
-        fields = "__all__"
+        fields = (
+            "first_skill", 'image_first', 'second_skill', 'image_second', 'third_skill', "image_third", 'passive_skill'
+        )

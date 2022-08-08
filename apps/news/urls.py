@@ -5,10 +5,10 @@ from . import views
 urlpatterns = [
 
     # post urls
-    path('posting-news', views.PostAPIView.as_view()),
-    path('<int:pk>/', views.PostRetrieveAPIView.as_view()),
-    path('categories/', views.PostCategoriesAPIView.as_view()),
-    path('categories/<int:pk>/', views.PostCategoryRetrieveAPIView.as_view()),
+    path('posting-news', views.PostAPIView.as_view(), name='posting-news'),
+    path('<int:pk>/', views.PostRetrieveAPIView.as_view(), name='post-retrieve'),
+    path('categories/', views.PostCategoriesAPIView.as_view(), name='categories'),
+    path('categories/<int:pk>/', views.PostCategoryRetrieveAPIView.as_view(), name='categories-retrieve'),
 
     # news comments aki post urls
     path('add-news-comment/', views.AddNewsComment.as_view(),

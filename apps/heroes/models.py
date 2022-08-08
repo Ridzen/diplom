@@ -20,8 +20,11 @@ class HeroesCategories(models.Model):
 
 class HeroesSkills(models.Model):
     first_skill = RichTextUploadingField()
+    image_first = models.ImageField(null=True)
     second_skill = RichTextUploadingField()
+    image_second = models.ImageField(null=True)
     third_skill = RichTextUploadingField()
+    image_third = models.ImageField(null=True)
     passive_skill = RichTextUploadingField()
 
     class Meta:
@@ -38,12 +41,16 @@ class Heroes(models.Model):
 
     images = models.ImageField()
     name = models.CharField(max_length=150)
-    role = models.ForeignKey(to=HeroesCategories, on_delete=models.CASCADE, related_name='hero',
-                             default=None, null=True)
+    role = models.ForeignKey(
+        to=HeroesCategories, on_delete=models.CASCADE, related_name='hero',
+                             default=None, null=True
+    )
     complexity = models.IntegerField(default=0, null=True)
     description = models.TextField()
-    skill = models.ForeignKey(HeroesSkills, on_delete=models.CASCADE, related_name='hero',
-                              default=None, null=True)
+    skill = models.ForeignKey(
+        HeroesSkills, on_delete=models.CASCADE, related_name='hero',
+                              default=None, null=True
+    )
 
     class Meta:
         db_table = 'heroes_db'

@@ -13,7 +13,9 @@ from apps.news.serializers import (
     NewsCommentsSerializer, UserCommentsSerializer,
     CreateNewsReplyCommentSerializer, CreateNewsCommentSerializer
 )
-from apps.news.models import Post, PostCategories, CommentReply, NewsComment, User
+from apps.news.models import (
+    Post, PostCategories, CommentReply, NewsComment, User
+)
 
 
 class PostAPIView(generics.ListCreateAPIView):

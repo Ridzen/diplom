@@ -6,8 +6,10 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
-from .serializers import (RegisterSerializer, UserProfileSerializer, ChangePasswordSerializer,
-                          ForgotPasswordSerializer, ForgotPassCompleteSerializer, UpdateProfileSerializer)
+from .serializers import (
+    RegisterSerializer, UserProfileSerializer, ChangePasswordSerializer,
+    ForgotPasswordSerializer, ForgotPassCompleteSerializer, UpdateProfileSerializer
+    )
 
 # Create your views here.
 
