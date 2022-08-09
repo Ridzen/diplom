@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-k^yxx8!fe#bt+k&e_kg0q%(%#wfrt8vrdr84(@sh1r4!oh^i$s"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get('DJANGO_DEBUG'))
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['*']
@@ -29,9 +29,9 @@ ALLOWED_HOSTS = ['*']
 if not DEBUG:
     # Cloudinary stuff
     CLOUDINARY_STORAGE = {
-        'CLOUD_NAME':  os.environ.get('CLOUD_NAME'),
-        'API_KEY':  os.environ.get('API_KEY'),
-        'API_SECRET':  os.environ.get('API_SECRET')
+        'CLOUD_NAME': 'productions',
+        'API_KEY':  '851917814973718',
+        'API_SECRET':  'K6cjG18m05MeHMUcKiEvk73q38Q'
     }
 
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
