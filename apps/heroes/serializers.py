@@ -37,8 +37,9 @@ class HeroesSkillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = HeroesSkills
         fields = (
-            "first_skill", 'image_first', 'second_skill', 'image_second', 'third_skill', "image_third", 'passive_skill',
-            'heroes', 'imagine_passive',
+            "first_skill", 'image_first', 'second_skill', 'image_second',
+            'third_skill', "image_third", 'passive_skill', 'image_passive',
+            'heroes',
         )
 
     def get_image(self, obj):
