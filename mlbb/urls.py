@@ -29,7 +29,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 scheme_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls'), name='Ckeditor'),
     path('admin/', admin.site.urls),
     path('api/v1/heroes/', include('apps.heroes.urls')),
     path('api/v1/news/', include('apps.news.urls')),
