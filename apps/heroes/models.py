@@ -26,6 +26,7 @@ class HeroesSkills(models.Model):
     third_skill = RichTextUploadingField()
     image_third = models.ImageField(null=True, blank=True)
     passive_skill = RichTextUploadingField()
+    image_passive = models.ImageField(null=True, blank=True)
 
     class Meta:
         db_table = 'skills_db'

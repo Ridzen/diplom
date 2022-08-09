@@ -31,5 +31,5 @@ class HeroesSkillsSerializer(serializers.ModelSerializer):
         model = HeroesSkills
         fields = (
             "first_skill", 'image_first', 'second_skill', 'image_second', 'third_skill', "image_third", 'passive_skill',
-            'heroes'
+            'heroes', 'imagine_passive',
         )
