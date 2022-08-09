@@ -10,7 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
-            'images', 'title', 'created_at', 'text', 'tag', 'in_archive'
+            'images', 'title', 'created_at', 'text', 'tag', 'in_archive',
         )
 
 
@@ -19,14 +19,14 @@ class PostCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PostCategories
-        fields = "key_news"
+        fields = "key_news", "heroes"
 
 
 class NewsCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsComment
         fields = (
-            'id', 'text', 'created_data'
+            'id', 'text', 'created_data',
         )
 
 
@@ -36,7 +36,7 @@ class UserCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'user_comments', 'full_name'
+            'user_comments', 'full_name',
         )
 
 
@@ -44,7 +44,7 @@ class CommentAuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'full_name', 'avatar'
+            'full_name', 'avatar',
         )
 
 
@@ -54,7 +54,7 @@ class NewsCommentReplySerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentReply
         fields = (
-            'author', 'comment', 'text', 'likes', 'total_likes', 'created'
+            'author', 'comment', 'text', 'likes', 'total_likes', 'created',
         )
 
 
@@ -62,7 +62,7 @@ class CreateNewsCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsComment
         fields = (
-            'author', 'text'
+            'author', 'text',
         )
 
 
@@ -70,6 +70,6 @@ class CreateNewsReplyCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentReply
         fields = (
-            'author', 'comment', 'text'
+            'author', 'comment', 'text',
         )
 

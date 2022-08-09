@@ -9,7 +9,7 @@ class HeroesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Heroes
         fields = (
-            'images', 'name', 'role', 'complexity', 'description', 'skill'
+            'id', 'images', 'name', 'role', 'complexity', 'description', 'skill',
         )
 
     def create(self, validated_data):
@@ -21,14 +21,15 @@ class HeroesCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HeroesCategories
-        fields = "key_role"
+        fields = ('key_role', 'heroes')
 
 
 class HeroesSkillsSerializer(serializers.ModelSerializer):
-    heroes = HeroesSerializer(many=True, read_only=True)
+    heroes = HeroesSerializer(many=True)
 
     class Meta:
         model = HeroesSkills
         fields = (
-            "first_skill", 'image_first', 'second_skill', 'image_second', 'third_skill', "image_third", 'passive_skill'
+            "first_skill", 'image_first', 'second_skill', 'image_second', 'third_skill', "image_third", 'passive_skill',
+            'heroes'
         )

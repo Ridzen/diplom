@@ -20,11 +20,11 @@ class HeroesCategories(models.Model):
 
 class HeroesSkills(models.Model):
     first_skill = RichTextUploadingField()
-    image_first = models.ImageField(null=True)
+    image_first = models.ImageField(null=True, blank=True)
     second_skill = RichTextUploadingField()
-    image_second = models.ImageField(null=True)
+    image_second = models.ImageField(null=True, blank=True)
     third_skill = RichTextUploadingField()
-    image_third = models.ImageField(null=True)
+    image_third = models.ImageField(null=True, blank=True)
     passive_skill = RichTextUploadingField()
 
     class Meta:
