@@ -6,7 +6,9 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class HeroesCategories(models.Model):
-    """Модель ролей героев"""
+    """
+    Модель ролей героев
+    """
 
     key_role = models.CharField(max_length=255, unique=False)
 
@@ -19,6 +21,9 @@ class HeroesCategories(models.Model):
 
 
 class HeroesSkills(models.Model):
+    """
+    Моделька для скиллов
+    """
     first_skill = RichTextUploadingField()
     image_first = models.ImageField(null=True, blank=True)
     second_skill = RichTextUploadingField()
@@ -38,7 +43,9 @@ class HeroesSkills(models.Model):
 
 
 class Heroes(models.Model):
-    """ Моделька для героев """
+    """
+    Моделька для героев
+    """
 
     images = models.ImageField()
     name = models.CharField(max_length=150)

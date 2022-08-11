@@ -6,7 +6,10 @@ from django.db import models
 
 
 class PostCategories(models.Model):
-    """Модель новостей про героев(категории)"""
+
+    """
+    Модель новостей про героев(категории)
+    """
 
     key_news = models.CharField(
         max_length=255, unique=False
@@ -20,7 +23,15 @@ class PostCategories(models.Model):
         return self.key_news
 
 
+User = get_user_model()
+
+
 class Post(models.Model):
+
+    """
+    Моделька постов, самих новостей
+    """
+
     images = models.ImageField(
         null=True, blank=True
     )
@@ -31,6 +42,9 @@ class Post(models.Model):
         auto_now_add=True
     )
     text = RichTextUploadingField()
+    category = models.ForeignKey(
+        PostCategories, on_delete=models.CASCADE, null=True, blank=True
+    )
     tag = models.CharField(
         max_length=50, null=True, blank=True
     )
@@ -40,19 +54,22 @@ class Post(models.Model):
 
     class Meta():
         db_table = 'posts'
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
 
     def __str__(self):
         return self.title
 
 
-User = get_user_model()
-
-
 class NewsComment(models.Model):
+    """
+    Моделька коментариев, для новостей
+    """
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Автор', related_name='user_comments'
+    )
+    comment = models.ForeignKey(
+        to=Post, on_delete=models.CASCADE, null=True, blank=True
     )
     text = models.TextField(
         verbose_name='Комментарий'
@@ -68,8 +85,16 @@ class NewsComment(models.Model):
         default=0, verbose_name='Кол-во лайков', db_index=True,
     )
 
+    class Meta:
+        verbose_name = 'Ответ на новость'
+        verbose_name_plural = 'Ответы на новость'
+
 
 class CommentReply(models.Model):
+    """
+    Моделька ответов для коментариев
+    """
+
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Автор'
     )
@@ -96,6 +121,4 @@ class CommentReply(models.Model):
     class Meta:
         verbose_name = 'Ответ на комментарий'
         verbose_name_plural = 'Ответы на комментарии'
-
-
 

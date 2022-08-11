@@ -10,7 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = (
-            'images', 'title', 'created_at', 'text', 'tag', 'in_archive',
+            'images', 'title', 'created_at', 'text', 'tag', 'in_archive', 'category'
         )
 
 
@@ -26,7 +26,7 @@ class NewsCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsComment
         fields = (
-            'id', 'text', 'created_data',
+            'id', 'text', 'created_data', 'comment',
         )
 
 

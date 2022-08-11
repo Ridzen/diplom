@@ -5,7 +5,9 @@ from django.utils.crypto import get_random_string
 
 
 class CustomManager(BaseUserManager):
-
+    """
+    Моделька менеджера
+    """
     def create_user(self, email, password, **extra_fields):
         if not email:
             msg_ = ("Email not provided!")
@@ -38,6 +40,10 @@ class CustomManager(BaseUserManager):
 
 
 class User(AbstractUser):
+
+    """
+    Моделька пользователя
+    """
     class Gender(models.TextChoices):
         MALE = 'male', 'male',
         FEMALE = 'female', 'female'
@@ -87,7 +93,7 @@ class User(AbstractUser):
 
 class Email(models.Model):
     """
-    for sending news to emails
+    Для отправки новостей на емайл
     """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='send_emails', verbose_name='Пользователь'
