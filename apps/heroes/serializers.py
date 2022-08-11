@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
 from apps.heroes.models import (
-    HeroesCategories, HeroesSkills, Heroes
+    HeroCategories, HeroSkills, Hero
                                 )
 
 
-class HeroesSerializer(serializers.ModelSerializer):
+class HeroSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Heroes
+        model = Hero
         fields = (
             'id', 'images', 'name', 'role', 'complexity', 'description', 'skill',
         )
@@ -20,22 +20,22 @@ class HeroesSerializer(serializers.ModelSerializer):
         return image
 
     def create(self, validated_data):
-        return Heroes.objects.create(**validated_data)
+        return Hero.objects.create(**validated_data)
 
 
-class HeroesCategorySerializer(serializers.ModelSerializer):
-    heroes = HeroesSerializer(many=True)
+class HeroCategorySerializer(serializers.ModelSerializer):
+    heroes = HeroSerializer(many=True)
 
     class Meta:
-        model = HeroesCategories
+        model = HeroCategories
         fields = ('key_role', 'heroes')
 
 
-class HeroesSkillsSerializer(serializers.ModelSerializer):
-    heroes = HeroesSerializer(many=True)
+class HeroSkillsSerializer(serializers.ModelSerializer):
+    heroes = HeroSerializer(many=True)
 
     class Meta:
-        model = HeroesSkills
+        model = HeroSkills
         fields = (
             "first_skill", 'image_first', 'second_skill', 'image_second',
             'third_skill', "image_third", 'passive_skill', 'image_passive',

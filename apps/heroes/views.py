@@ -7,23 +7,23 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from apps.heroes.models import (
-    Heroes, HeroesCategories, HeroesSkills
+    Hero, HeroCategories, HeroSkills
 )
 from apps.heroes.serializers import (
-    HeroesSerializer, HeroesSkillsSerializer, HeroesCategorySerializer
+    HeroSerializer, HeroSkillsSerializer, HeroCategorySerializer
 )
 
 
-class HeroesAPIView(generics.ListCreateAPIView):
+class HeroAPIView(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['role']
-    serializer_class = HeroesSerializer
-    search_fields = ["name"]
-    queryset = Heroes.objects.all()
+    serializer_class = HeroSerializer
+    search_fields = ["name", "role"]
+    queryset = Hero.objects.all()
 
     def post(self, request):
         request_body = request.data
-        srz = HeroesSerializer(data=request_body)
+        srz = HeroSerializer(data=request_body)
         if srz.is_valid():
             srz.save()
             return Response(status=status.HTTP_201_CREATED)
@@ -35,79 +35,79 @@ class HeroesAPIView(generics.ListCreateAPIView):
         return []
 
 
-class HeroesRetrieveAPIView(APIView):
+class HeroRetrieveAPIView(APIView):
     def get(self, request, pk):
         try:
-            product = Heroes.objects.get(id=pk)
-        except Heroes.DoesNotExist:
+            product = Hero.objects.get(id=pk)
+        except Hero.DoesNotExist:
             return Response({'msg': 'product not found'}, status=status.HTTP_404_NOT_FOUND)
-        srz = HeroesSerializer(product, many=False)
+        srz = HeroSerializer(product, many=False)
         return Response(srz.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
         try:
-            product = Heroes.objects.get(id=pk)
-        except Heroes.DoesNotExist:
+            product = Hero.objects.get(id=pk)
+        except Hero.DoesNotExist:
             return JsonResponse({'msg': 'product not found'}, status=status.HTTP_404_NOT_FOUND)
         product.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
 
-class HeroesCategoriesAPIView(generics.ListAPIView):
-    serializer_class = HeroesCategorySerializer
-    queryset = HeroesCategories.objects.all()
+class HeroCategoriesAPIView(generics.ListAPIView):
+    serializer_class = HeroCategorySerializer
+    queryset = HeroCategories.objects.all()
 
     def post(self, request):
         request_body = request.data
-        new_heroes_category = HeroesCategories.objects.create(key_role=request_body['key_role'],
+        new_heroes_category = HeroCategories.objects.create(key_role=request_body['key_role'],
                                                        )
-        srz = HeroesCategorySerializer(new_heroes_category, many=False)
+        srz = HeroCategorySerializer(new_heroes_category, many=False)
         return Response(srz.data, status=status.HTTP_201_CREATED)
 
 
-class HeroesCategoryRetrieveAPIView(APIView):
+class HeroCategoryRetrieveAPIView(APIView):
     def get(self, request, pk):
         try:
-            category = HeroesCategories.objects.get(id=pk)
-        except HeroesCategories.DoesNotExist:
+            category = HeroCategories.objects.get(id=pk)
+        except HeroCategories.DoesNotExist:
             return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
-        srz = HeroesCategorySerializer(category, many=False)
+        srz = HeroCategorySerializer(category, many=False)
         return Response(srz.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
         try:
-            category = Heroes.objects.get(id=pk)
-        except HeroesCategories.DoesNotExist:
+            category = Hero.objects.get(id=pk)
+        except HeroCategories.DoesNotExist:
             return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class HeroesSkillsAPIView(generics.ListAPIView):
-    serializer_class = HeroesSkillsSerializer
-    queryset = HeroesSkills.objects.all()
+class HeroSkillsAPIView(generics.ListAPIView):
+    serializer_class = HeroSkillsSerializer
+    queryset = HeroSkills.objects.all()
 
     def post(self, request):
         request_body = request.data
-        new_heroes_skills = HeroesSkills.objects.create(first_skill=request_body['first_skill'],
+        new_heroes_skills = HeroSkills.objects.create(first_skill=request_body['first_skill'],
                                                        )
-        srz = HeroesSkillsSerializer(new_heroes_skills, many=False)
+        srz = HeroSkillsSerializer(new_heroes_skills, many=False)
         return Response(srz.data, status=status.HTTP_201_CREATED)
 
 
-class HeroesSkillsRetrieveAPIView(APIView):
+class HeroSkillsRetrieveAPIView(APIView):
     def get(self, request, pk):
         try:
-            skill = HeroesSkills.objects.get(id=pk)
-        except HeroesSkills.DoesNotExist:
+            skill = HeroSkills.objects.get(id=pk)
+        except HeroSkills.DoesNotExist:
             return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
-        srz = HeroesSkillsSerializer(skill, many=False)
+        srz = HeroSkillsSerializer(skill, many=False)
         return Response(srz.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
         try:
-            skill = Heroes.objects.get(id=pk)
-        except HeroesSkills.DoesNotExist:
+            skill = Hero.objects.get(id=pk)
+        except HeroSkills.DoesNotExist:
             return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
         skill.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

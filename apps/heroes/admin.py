@@ -1,19 +1,20 @@
 from django.contrib import admin
 
 from apps.heroes.models import (
-    HeroesCategories, Heroes, HeroesSkills
+    HeroCategories, Hero, HeroSkills
 )
 
-@admin.register(Heroes)
-class AdminHeroes(admin.ModelAdmin):
+
+@admin.register(Hero)
+class AdminHero(admin.ModelAdmin):
     pass
 
 
-@admin.register(HeroesCategories)
-class AdminHeroesCategory(admin.ModelAdmin):
+@admin.register(HeroCategories)
+class AdminHeroCategory(admin.ModelAdmin):
     pass
 
 
-@admin.register(HeroesSkills)
+@admin.register(HeroSkills)
 class AdminSkills(admin.ModelAdmin):
     pass
