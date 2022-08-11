@@ -149,6 +149,8 @@ CORS_ALLOW_HEADERS = [
 ]
 
 
+CORS_ORIGIN_WHITELIST = ['https://mlbb-verkg.herokuapp.com/']
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
