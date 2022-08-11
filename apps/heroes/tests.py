@@ -4,28 +4,28 @@ from apps.heroes.serializers import HeroSerializer, Hero, HeroCategories, HeroCa
 
 
 class HeroSerializerTestCase(TestCase):
-    def test_heroes_serializer(self):
-        heroes = Hero.object.create(name='Ван Ван', role="Mage", complexity=56, description='SuperArcher')
-        srz = HeroSerializer(heroes, many=False)
-        exepted_data = {
-            'id': heroes.id,
-            'name': 'Наушники',
+    def test_hero_serializer(self):
+        hero = Hero.object.create(name='Ван Ван', role="Mage", complexity=56, description='SuperArcher')
+        srz = HeroSerializer(hero, many=False)
+        expected_data = {
+            'id': hero.id,
+            'name': 'Ван Ван',
             'role': 'Mage',
             'complexity': 56,
             'description': "SuperArcher"
         }
-        self.assertEqual(srz.data, exepted_data)
+        self.assertEqual(srz.data, expected_data)
 
 
 class HeroCategorySerializerTestCase(TestCase):
 
-    def test_heroes_category_serializer(self):
+    def test_hero_category_serializer(self):
         category = HeroCategories.object.create(title="Mage")
         srz = HeroCategorySerializer(category, many=False)
         expected_data = {
             'id': category.id,
             'name': 'Mage',
-            'heroes': [],
+            'hero': [],
         }
         result = srz.data
         self.assertEqual(result, expected_data)
