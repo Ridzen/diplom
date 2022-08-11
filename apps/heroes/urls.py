@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     # Heroes urls
-    path('heroes-list', views.HeroAPIView.as_view(), name='heroes-list'),
+    path('hero-list', views.HeroAPIView.as_view(), name='hero-list'),
     path('<int:pk>/', views.HeroRetrieveAPIView.as_view(), name='heroes-retrieve'),
 
     # Heroes Categories
