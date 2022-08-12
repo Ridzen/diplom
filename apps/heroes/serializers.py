@@ -25,7 +25,10 @@ class HeroSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep["role"] = instance.role.key_role
-        # rep['skill'] = instance.skill.first_skill
+        rep['skill'] = instance.skill.first_skill
+        rep['skill'] = instance.skill.second_skill
+        rep['skill'] = instance.skill.third_skill
+        rep['skill'] = instance.skill.passive_skill
         return rep
 
     # def to_representation(self, instance):
