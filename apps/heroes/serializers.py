@@ -22,6 +22,19 @@ class HeroSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Hero.objects.create(**validated_data)
 
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep["role"] = instance.role.key_role
+        # rep['skill'] = instance.skill.first_skill
+        return rep
+
+    # def to_representation(self, instance):
+    #     skill = HeroSkills.objects.get(id=instance.id)
+    #     rep = super().to_representation(instance)
+    #     rep['role'] = instance.role.key_role
+    #     rep['skill'] = HeroSkillsSerializer(skill, many=True).data
+    #     return rep
+
 
 class HeroCategorySerializer(serializers.ModelSerializer):
     hero = HeroSerializer(many=True)
@@ -29,11 +42,6 @@ class HeroCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = HeroCategories
         fields = ('key_role', 'hero')
-
-    # def to_representation(self, instance):
-    #     repres = super().to_representation(instance)
-    #     repres["key_role"] = instance.key_role.key_role
-    #     return repres
 
 
 class HeroSkillsSerializer(serializers.ModelSerializer):
