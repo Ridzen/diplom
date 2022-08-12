@@ -24,11 +24,16 @@ class HeroSerializer(serializers.ModelSerializer):
 
 
 class HeroCategorySerializer(serializers.ModelSerializer):
-    heroes = HeroSerializer(many=True)
+    hero = HeroSerializer(many=True)
 
     class Meta:
         model = HeroCategories
-        fields = ('key_role', 'heroes')
+        fields = ('key_role', 'hero')
+
+    # def to_representation(self, instance):
+    #     repres = super().to_representation(instance)
+    #     repres["key_role"] = instance.key_role.key_role
+    #     return repres
 
 
 class HeroSkillsSerializer(serializers.ModelSerializer):
