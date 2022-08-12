@@ -29,7 +29,7 @@ User = get_user_model()
 class Post(models.Model):
 
     """
-    Моделька постов, самих новостей
+    Модель постов, самих новостей
     """
 
     images = models.ImageField(
@@ -52,7 +52,7 @@ class Post(models.Model):
         default=False
     )
 
-    class Meta():
+    class Meta:
         db_table = 'posts'
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
@@ -63,7 +63,7 @@ class Post(models.Model):
 
 class NewsComment(models.Model):
     """
-    Моделька коментариев, для новостей
+    Модель коментариев, для новостей
     """
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Автор', related_name='user_comments'
@@ -92,7 +92,7 @@ class NewsComment(models.Model):
 
 class CommentReply(models.Model):
     """
-    Моделька ответов для коментариев
+    Модель ответов для коментариев
     """
 
     author = models.ForeignKey(

@@ -10,11 +10,11 @@ from apps.heroes.models import (
     Hero, HeroCategories, HeroSkills
 )
 from apps.heroes.serializers import (
-    HeroSerializer, HeroSkillsSerializer, HeroCategorySerializer
+    HeroSerializer, HeroSkillsNestedSerializer, HeroCategorySerializer
 )
 
 
-class HeroAPIView(generics.ListCreateAPIView):
+class HeroListCreateAPIView(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['role']
     serializer_class = HeroSerializer
@@ -84,14 +84,14 @@ class HeroCategoryRetrieveAPIView(APIView):
 
 
 class HeroSkillsAPIView(generics.ListAPIView):
-    serializer_class = HeroSkillsSerializer
+    serializer_class = HeroSkillsNestedSerializer
     queryset = HeroSkills.objects.all()
 
     def post(self, request):
         request_body = request.data
         new_heroes_skills = HeroSkills.objects.create(first_skill=request_body['first_skill'],
                                                        )
-        srz = HeroSkillsSerializer(new_heroes_skills, many=False)
+        srz = HeroSkillsNestedSerializer(new_heroes_skills, many=False)
         return Response(srz.data, status=status.HTTP_201_CREATED)
 
 
@@ -101,7 +101,7 @@ class HeroSkillsRetrieveAPIView(APIView):
             skill = HeroSkills.objects.get(id=pk)
         except HeroSkills.DoesNotExist:
             return Response({'msg': 'category not found'}, status=status.HTTP_404_NOT_FOUND)
-        srz = HeroSkillsSerializer(skill, many=False)
+        srz = HeroSkillsNestedSerializer(skill, many=False)
         return Response(srz.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):

@@ -6,7 +6,7 @@ from django.utils.crypto import get_random_string
 
 class CustomManager(BaseUserManager):
     """
-    Моделька менеджера
+    Модель менеджера
     """
     def create_user(self, email, password, **extra_fields):
         if not email:
@@ -42,7 +42,7 @@ class CustomManager(BaseUserManager):
 class User(AbstractUser):
 
     """
-    Моделька пользователя
+    Модель пользователя
     """
     class Gender(models.TextChoices):
         MALE = 'male', 'male',

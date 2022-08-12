@@ -22,7 +22,7 @@ class HeroCategories(models.Model):
 
 class HeroSkills(models.Model):
     """
-    Моделька для скиллов
+    Модель для скиллов
     """
     first_skill = RichTextUploadingField()
     image_first = models.ImageField(null=True, blank=True)
@@ -44,7 +44,7 @@ class HeroSkills(models.Model):
 
 class Hero(models.Model):
     """
-    Моделька для героев
+    Модель для героев
     """
 
     images = models.ImageField()
