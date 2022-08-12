@@ -15,12 +15,18 @@ class HeroSkillsNestedSerializer(serializers.ModelSerializer):
 class HeroSerializer(serializers.ModelSerializer):
 
     skill = HeroSkillsNestedSerializer(many=False)
+    role_key = serializers.SerializerMethodField()
     class Meta:
         model = Hero
         fields = (
-            'id', 'images', 'name', 'role', 'complexity', 'description', 'skill',
+            'id', 'images', 'name', 'role_key', 'complexity', 'description', 'skill',
         )
 
+    def get_role_key(self, instance):
+        try:
+            return instance.role.key_role
+        except AttributeError:
+            return None
     def get_image(self, obj):
         try:
             image = obj.images.url
@@ -37,6 +43,6 @@ class HeroCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HeroCategories
-        fields = ('key_role', 'hero')
+        fields = ('id', 'key_role', 'hero')
 
 
